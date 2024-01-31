@@ -156,7 +156,7 @@ We implement a backside to materials: the "back" side of triangles get a special
 
 With this addition, 
 
-![multiple_surfaces](results/backfacing.png)
+![multiple_surfaces](results/backfacing_output.png)
 Figure 8: Rendering `Input-Scenes/three_spheres.scn` produces this image. We now see that the above triangle was facing away from the camera.
 
 ## Dielectrics
