@@ -5,6 +5,8 @@ Written September-November of 2023
 
 In COMS 4160 we write, test, and evaluate a ray tracing renderer named `Olio`. Over the course of the semester, the renderer evolves more features. I have ordered this documentation chronologically with the advancements of the progress. 
 
+**Note for Recruiters:** Since this was part of a class project I have not included my code publicly, if you would like to view it please reach out and request it.
+
 **Disclaimer:** This is not standalone runnable code. I have included this in the portfolio as a proof to my understanding of ray tracing methodology and competetency in c++. The pieces I have included are only that which I have written myself/are essential to the understanding of code that I have written(ex. provided header files for classes I implement.) Each file will be marked with an author for clarity. I do not wish to take credit for work that is not mine.
 
 In this README I give an overview of the entierty of the process at a higher level. But more detail for the different sections is given in `Project-Breifs/README_HWX_TITLE.md`. 
