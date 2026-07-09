@@ -1,3 +1,6 @@
+### RayTracer
+Following along with Pete Shirley's Ray Tracing In One Weekend series (raytracing.github.io)
+
 
 ### Configuration
 ```
