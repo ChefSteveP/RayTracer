@@ -49,6 +49,9 @@ using point3 = vec3;
 inline vec3 operator+(const vec3& vec1, const vec3& vec2) {
     return vec3(vec1[0] + vec2[0], vec1[1] + vec2[1], vec1[2] + vec2[2]);
 }
+inline vec3 operator+(double t, const vec3& vec2) {
+    return vec3(t + vec2[0], t + vec2[1], t + vec2[2]);
+}
 
 inline vec3 operator-(const vec3& vec1, const vec3& vec2) {
     return vec3(vec1[0] - vec2[0], vec1[1] - vec2[1], vec1[2] - vec2[2]);
@@ -84,6 +87,10 @@ inline vec3 cross(const vec3& u, const vec3& v) {
 
 inline vec3 unit_vector(const vec3& v) {
     return v / v.norm();
+}
+
+inline vec3 lerp(const vec3& a, const vec3& b, double t){
+    return a * (1 - t) + t * (b);
 }
 
 #endif
