@@ -1,5 +1,4 @@
-#ifndef VEC3_H
-#define VEC3_H
+#pragma once
 
 #include <cmath>
 #include <iostream>
@@ -92,5 +91,3 @@ inline vec3 unit_vector(const vec3& v) {
 inline vec3 lerp(const vec3& a, const vec3& b, double t){
     return a * (1 - t) + t * (b);
 }
-
-#endif
