@@ -1,65 +1,13 @@
 #include "vec3.h"
 #include "ray.h"
 #include "color.h"
+#include "sphere.h"
 #include <iostream>
 #include <vector>
 //cmake -B build // config
 //cmake --build build //compile
 
-class Sphere{
 
-public:
-    Sphere(point3 center, double radius){
-        m_center = center;
-        m_radius = radius;
-    }
-    inline double getRadius() const {return m_radius;}
-    inline point3 getCenter() const {return m_center;}
-
-private:
-    point3 m_center;
-    double m_radius;
-};
-
-
-class SphereList{
-
-    public:
-    SphereList(){}
-    
-    void push(Sphere s){
-        m_list.push_back(s);
-    }
-    const Sphere* pop(){
-        if (!m_list.empty()) {
-            Sphere s = m_list.back();
-            m_list.pop_back();
-            return &s;
-        }
-        else {
-            return nullptr;
-        }
-    }
-    std::vector<Sphere> getList() {return m_list;}
-
-    private:
-    std::vector<Sphere> m_list;
-};
-
-double hit_sphere(const point3& center, double radius, const ray& r){
-    vec3 d = r.direction();
-    vec3 o_to_c = center - r.origin();
-    double a = dot(d,d);
-    
-    double b = -2.0 * (dot(d, o_to_c));
-    double c = dot(o_to_c, o_to_c) - (radius * radius);
-    double discriminant = (b * b) - (4 * a * c);
-    if (discriminant < 0) {
-        return -1.0;
-    } else {
-        return (-b - std::sqrt(discriminant) ) / (2.0*a);
-    }
-}
 
 color ray_color(const ray& r, SphereList& sl) {
     
@@ -68,10 +16,9 @@ color ray_color(const ray& r, SphereList& sl) {
     for (int i=0; i < list.size(); ++i){
 
         auto s = list[i];
-        double t = hit_sphere(s.getCenter(), s.getRadius(), r);
-        if (t > 0) {
-            vec3 N = unit_vector(r.at(t)-s.getCenter());
-            return 0.5 + (0.5 * N);
+        hit_record hr;
+        if( s.hit(r, 0.0, 1000.0, hr)){
+            return 0.5 + (0.5 * hr.normal);
             // return color(1.0, 0.0, 1.0);
         }
     }
