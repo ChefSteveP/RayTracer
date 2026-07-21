@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ray.h"
-
 class hit_record {
 
     public:

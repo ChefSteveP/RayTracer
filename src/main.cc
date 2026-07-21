@@ -1,6 +1,5 @@
-#include "vec3.h"
-#include "ray.h"
-#include "color.h"
+
+#include "common.h"
 #include "sphere.h"
 #include "hittable_list.h"
 
@@ -14,7 +13,7 @@
 color ray_color(const ray& r, hittable_list& hl) {
     
     hit_record hr;
-    if( hl.hit(r, 0.0, 1000.0, hr)){
+    if( hl.hit(r, 0.0, infinity, hr)){
         return 0.5 + (0.5 * hr.normal);
     }
     
@@ -59,6 +58,7 @@ int main() {
     obj_list.add(std::make_shared<Sphere>(point3(0,0,-1), 0.5));
     obj_list.add(std::make_shared<Sphere>(point3(1,0,-2), 0.5));
     obj_list.add(std::make_shared<Sphere>(point3(-1,-0.5,-2), 0.5));
+    obj_list.add(std::make_shared<Sphere>(point3(0,-100.5,-1), 100));
     // SL.push(Sphere(point3(1,0,-2), 0.5));
     for (int j = 0; j < image_height; j++){
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
