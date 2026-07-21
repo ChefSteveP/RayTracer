@@ -2,6 +2,8 @@
 #include "ray.h"
 #include "color.h"
 #include "sphere.h"
+#include "hittable_list.h"
+
 #include <iostream>
 #include <vector>
 //cmake -B build // config
@@ -9,19 +11,13 @@
 
 
 
-color ray_color(const ray& r, SphereList& sl) {
+color ray_color(const ray& r, hittable_list& hl) {
     
-    auto list = sl.getList();
-    // Sphere s = list[0];
-    for (int i=0; i < list.size(); ++i){
-
-        auto s = list[i];
-        hit_record hr;
-        if( s.hit(r, 0.0, 1000.0, hr)){
-            return 0.5 + (0.5 * hr.normal);
-            // return color(1.0, 0.0, 1.0);
-        }
+    hit_record hr;
+    if( hl.hit(r, 0.0, 1000.0, hr)){
+        return 0.5 + (0.5 * hr.normal);
     }
+    
     vec3 unit_direction = unit_vector(r.direction());
     auto a = 0.5*(unit_direction.y()) + 0.5;
     return lerp(color(1.0, 1.0, 1.0), color(0.2, 0.3, 0.7), a);
@@ -58,9 +54,12 @@ int main() {
 
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
-    SphereList SL;
-    SL.push(Sphere(point3(0,0,-1), 0.5));
-    SL.push(Sphere(point3(1,0,-2), 0.5));
+    hittable_list obj_list;
+
+    obj_list.add(std::make_shared<Sphere>(point3(0,0,-1), 0.5));
+    obj_list.add(std::make_shared<Sphere>(point3(1,0,-2), 0.5));
+    obj_list.add(std::make_shared<Sphere>(point3(-1,-0.5,-2), 0.5));
+    // SL.push(Sphere(point3(1,0,-2), 0.5));
     for (int j = 0; j < image_height; j++){
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; i++){
@@ -68,7 +67,7 @@ int main() {
             auto ray_direction = pixel_center - camera_center;
             ray r ( camera_center, ray_direction );
 
-            color pixel_color = ray_color(r, SL);
+            color pixel_color = ray_color(r, obj_list);
             write_color(std::cout, pixel_color);
         }
     }
