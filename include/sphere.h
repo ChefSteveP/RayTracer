@@ -37,7 +37,8 @@ public:
 
         rec.t = root;
         rec.p = r.at(rec.t);
-        rec.normal = (rec.p - m_center) / m_radius;
+        vec3 outward_normal = (rec.p - m_center) / m_radius;
+        rec.set_face_normal(r, outward_normal);
 
         return true;
     }
@@ -46,29 +47,4 @@ public:
 private:
     point3 m_center;
     double m_radius;
-};
-
-
-class SphereList{
-
-    public:
-    SphereList() = default;
-    
-    void push(Sphere s){
-        m_list.push_back(s);
-    }
-    const Sphere* pop(){
-        if (!m_list.empty()) {
-            Sphere s = m_list.back();
-            m_list.pop_back();
-            return &s;
-        }
-        else {
-            return nullptr;
-        }
-    }
-    std::vector<Sphere> getList() {return m_list;}
-
-    private:
-    std::vector<Sphere> m_list;
 };
