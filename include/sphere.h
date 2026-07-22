@@ -14,7 +14,7 @@ public:
     inline double getRadius() const {return m_radius;}
     inline point3 getCenter() const {return m_center;}
 
-    bool hit(const ray& r, double ray_tmin, double ray_tmax, hit_record& rec) const override{
+    bool hit(const ray& r, interval ray_t, hit_record& rec) const override{
         vec3 d = r.direction();
         vec3 o_to_c = m_center - r.origin();
         double a = dot(d,d);
@@ -28,9 +28,9 @@ public:
             
         auto root = (-b - std::sqrt(discriminant) ) / (2.0*a);
         
-        if (root <= ray_tmin || root >= ray_tmax){
+        if (!ray_t.surrounds(root)) {
             root = (-b + std::sqrt(discriminant) ) / (2.0*a);
-            if (root <= ray_tmin || root >= ray_tmax) {
+            if (!ray_t.surrounds(root)) {
                 return false;
             }
         }

@@ -18,15 +18,15 @@ class hittable_list: public hittable {
             objects.push_back(object);
         }
 
-        bool hit(const ray&r, double ray_tmin, double ray_tmax, hit_record& rec) const override{
+        bool hit(const ray&r, interval ray_t, hit_record& rec) const override{
 
             hit_record temp_rec;
             bool hit_anything = false;
-            double closest_point = ray_tmax;
+            double closest_point = ray_t.max;
 
             for(const auto& object: objects){
                 //search until the closest point seen so far
-                if(object->hit(r, ray_tmin, closest_point, temp_rec)) {
+                if(object->hit(r, interval(ray_t.min, closest_point), temp_rec)) {
                     hit_anything = true;
                     closest_point = temp_rec.t;
                     rec = temp_rec;

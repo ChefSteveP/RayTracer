@@ -13,7 +13,7 @@
 color ray_color(const ray& r, hittable_list& hl) {
     
     hit_record hr;
-    if( hl.hit(r, 0.0, infinity, hr)){
+    if( hl.hit(r, interval(0.0, infinity), hr)){
         return 0.5 + (0.5 * hr.normal);
     }
     
